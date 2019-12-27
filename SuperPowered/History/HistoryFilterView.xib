@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HistoryFilterView" customModule="Trigo" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="Rfh-0A-D3X"/>
+                <outlet property="showBadHabitsCheckbox" destination="8gA-aP-oxZ" id="toE-Cc-yd0"/>
+                <outlet property="showBadHabitsText" destination="y2O-Pw-Jl2" id="uiH-hb-ITn"/>
+                <outlet property="showGoodHabitsCheckbox" destination="5WW-WY-bub" id="haH-R7-wES"/>
+                <outlet property="showGoodHabitsText" destination="7tt-EU-037" id="LT6-pF-A9f"/>
+                <outlet property="showNotesCheckbox" destination="l4d-IO-VKU" id="qNk-E1-vQv"/>
+                <outlet property="showNotesText" destination="jth-9z-qjp" id="Ad2-YK-Z8D"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="u0Q-cc-2Wn">
+                    <rect key="frame" x="10" y="440.5" width="394" height="25"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OQc-7s-YoM">
+                            <rect key="frame" x="0.0" y="0.0" width="74" height="25"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l4d-IO-VKU">
+                                    <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="25" id="Xbq-FJ-ZXY"/>
+                                        <constraint firstAttribute="width" secondItem="l4d-IO-VKU" secondAttribute="height" multiplier="1:1" id="bsb-xm-hnf"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="khf-hz-4E0"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jth-9z-qjp">
+                                    <rect key="frame" x="33" y="0.0" width="41" height="25"/>
+                                    <state key="normal" title="Notes"/>
+                                    <connections>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="Auc-AM-iH6"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="kQH-RD-XII">
+                            <rect key="frame" x="133.5" y="0.0" width="106" height="25"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gA-aP-oxZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="8gA-aP-oxZ" secondAttribute="height" multiplier="1:1" id="FN9-Hy-wSm"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="Fdx-TT-QO0"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2O-Pw-Jl2">
+                                    <rect key="frame" x="33" y="0.0" width="73" height="25"/>
+                                    <state key="normal" title="Bad habits"/>
+                                    <connections>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="4Ig-9E-OUG"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Idc-ea-dRn">
+                            <rect key="frame" x="277" y="0.0" width="117" height="25"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5WW-WY-bub">
+                                    <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="5WW-WY-bub" secondAttribute="height" multiplier="1:1" id="len-rN-BzX"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="cPZ-Lh-wdI"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tt-EU-037">
+                                    <rect key="frame" x="33" y="0.0" width="84" height="25"/>
+                                    <state key="normal" title="Good habits"/>
+                                    <connections>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="Gmq-W2-oTO"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="5WW-WY-bub" firstAttribute="width" secondItem="l4d-IO-VKU" secondAttribute="width" id="5Pg-wv-uNE"/>
+                        <constraint firstItem="8gA-aP-oxZ" firstAttribute="width" secondItem="l4d-IO-VKU" secondAttribute="width" id="N8s-VQ-UDc"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="u0Q-cc-2Wn" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-10" id="3B0-t0-oh4">
+                    <variation key="heightClass=regular-widthClass=regular" constant="-40"/>
+                </constraint>
+                <constraint firstItem="u0Q-cc-2Wn" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="MC8-GW-hKz"/>
+                <constraint firstItem="u0Q-cc-2Wn" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="OoP-cA-hpN">
+                    <variation key="heightClass=regular-widthClass=regular" constant="40"/>
+                </constraint>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="139" y="84"/>
+        </view>
+    </objects>
+</document>

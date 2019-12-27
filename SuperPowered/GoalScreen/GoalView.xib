@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GoalView" customModule="Trigo" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="gbz-YM-EqO"/>
+                <outlet property="descriptionTextViewContainer" destination="b3H-dL-aw7" id="mUw-9x-jmw"/>
+                <outlet property="textViewContainersContainer" destination="N6V-0T-p4I" id="9Gv-L3-7rH"/>
+                <outlet property="textViewsSpacingConstraint" destination="ych-VR-ySE" id="6du-Lz-oBc"/>
+                <outlet property="titleTextViewContainer" destination="HBr-jL-pTU" id="nmg-np-aOV"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N6V-0T-p4I">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HBr-jL-pTU" customClass="TextViewContainer" customModule="Trigo" customModuleProvider="target">
+                            <rect key="frame" x="10" y="0.0" width="384" height="128"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        </view>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b3H-dL-aw7" customClass="TextViewContainer" customModule="Trigo" customModuleProvider="target">
+                            <rect key="frame" x="10" y="169" width="384" height="128"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="HBr-jL-pTU" firstAttribute="leading" secondItem="N6V-0T-p4I" secondAttribute="leading" constant="10" id="FML-Yc-Ixy"/>
+                        <constraint firstItem="b3H-dL-aw7" firstAttribute="leading" secondItem="N6V-0T-p4I" secondAttribute="leading" constant="10" id="I3N-d0-PLI"/>
+                        <constraint firstAttribute="bottom" secondItem="b3H-dL-aw7" secondAttribute="bottom" constant="10" id="SXu-eQ-tGo"/>
+                        <constraint firstAttribute="trailing" secondItem="HBr-jL-pTU" secondAttribute="trailing" constant="20" id="WGa-jz-JiU"/>
+                        <constraint firstItem="HBr-jL-pTU" firstAttribute="top" secondItem="N6V-0T-p4I" secondAttribute="top" constant="5" id="gYz-RY-7ay"/>
+                        <constraint firstItem="b3H-dL-aw7" firstAttribute="top" secondItem="HBr-jL-pTU" secondAttribute="bottom" constant="-10" id="ych-VR-ySE"/>
+                        <constraint firstAttribute="trailing" secondItem="b3H-dL-aw7" secondAttribute="trailing" constant="20" id="zWZ-2c-8YI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="N6V-0T-p4I" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="3Tb-3u-MkT"/>
+                <constraint firstItem="N6V-0T-p4I" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ADx-re-doO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="N6V-0T-p4I" secondAttribute="bottom" id="VjT-g8-hYP"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="N6V-0T-p4I" secondAttribute="trailing" id="ub4-ZW-tpB"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="139" y="94"/>
+        </view>
+    </objects>
+</document>

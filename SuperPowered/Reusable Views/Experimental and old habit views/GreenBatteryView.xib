@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GreenBatteryView" customModule="Trigo" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="zpY-xI-q5r"/>
+                <outlet property="figureView" destination="nYt-7c-9Ei" id="4UY-8z-JBR"/>
+                <outlet property="indicatorView" destination="QiX-uN-jfT" id="Rhy-Va-hE6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QiX-uN-jfT" customClass="BatteryView" customModule="Trigo" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="246" width="414" height="414"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="QiX-uN-jfT" secondAttribute="height" multiplier="1:1" id="ZsH-xI-6Ig"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYt-7c-9Ei" customClass="HabitBatteryView" customModule="Trigo" customModuleProvider="target">
+                    <rect key="frame" x="83" y="329.5" width="248" height="247"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="nYt-7c-9Ei" secondAttribute="height" multiplier="1:1" constant="1" id="lNP-AH-xqJ"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="nYt-7c-9Ei" firstAttribute="centerX" secondItem="QiX-uN-jfT" secondAttribute="centerX" id="07s-kv-Yn2"/>
+                <constraint firstItem="QiX-uN-jfT" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Sbl-pn-WJt"/>
+                <constraint firstItem="QiX-uN-jfT" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="USh-jx-Aln"/>
+                <constraint firstItem="nYt-7c-9Ei" firstAttribute="centerY" secondItem="QiX-uN-jfT" secondAttribute="centerY" id="cCw-f7-l1h"/>
+                <constraint firstItem="QiX-uN-jfT" firstAttribute="width" secondItem="vUN-kp-3ea" secondAttribute="width" id="iYD-uu-M3b"/>
+                <constraint firstItem="nYt-7c-9Ei" firstAttribute="width" secondItem="QiX-uN-jfT" secondAttribute="width" multiplier="0.6" id="wC0-FZ-Geu"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="139" y="84"/>
+        </view>
+    </objects>
+</document>
