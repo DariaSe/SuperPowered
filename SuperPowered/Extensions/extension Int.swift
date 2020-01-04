@@ -12,4 +12,7 @@ extension Int {
     var cgFloat: CGFloat {
         return CGFloat(self)
     }
+    var bool: Bool {
+        return self == 1 ? true : false
+    }
 }

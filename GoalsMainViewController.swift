@@ -51,6 +51,9 @@ class GoalsMainViewController: GoalsBaseViewController {
         isFilterShown = false
         headerHeightConstraint.constant = 0
         filterView.alpha =  0.0
+        if goals.isEmpty {
+            addGoalButton.isEnabled = true
+        }
     }
     
     // MARK: - Bar Button Items

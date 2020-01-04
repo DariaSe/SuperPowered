@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import CloudKit
 
 class Habit: MainItem, Codable, Comparable, IDValidator {
     
-// MARK: - Properties
+    // MARK: - Properties
     
     var itemType: MainItemType {
         return .habit(self)
@@ -80,7 +81,7 @@ class Habit: MainItem, Codable, Comparable, IDValidator {
         
         return sortedArray
     }
-// MARK: - Series
+    // MARK: - Series
     
     var currentSerie: Int {
         var sum = 0
@@ -107,7 +108,7 @@ class Habit: MainItem, Codable, Comparable, IDValidator {
         return seriesArray.sorted().last ?? 0
     }
     
-// MARK: - Statistics
+    // MARK: - Statistics
     
     var progress: Int {
         return checkIns.map{$0.habitType == .good ? 1 : -2}.reduce(0){$0 + $1}
@@ -148,7 +149,7 @@ class Habit: MainItem, Codable, Comparable, IDValidator {
             .filter{$0.date.hour == hour}
             .count
     }
-
+    
     var daysSinceTriggerWasSet: Int {
         let startDateStart = Calendar.current.dateInterval(of: .day, for: self.creationDate)!.start
         let numberOfDays = Calendar.current.dateComponents([.day], from: startDateStart, to: Date()).day! + 1
@@ -242,7 +243,7 @@ class Habit: MainItem, Codable, Comparable, IDValidator {
     
     func withCheckInAdded(habitType: HabitType) -> Habit {
         let text = habitType == .good ? self.goodHabit : self.badHabit
-        checkIns.insert(CheckIn(text: text, triggerText: self.trigger, habitType: habitType), at: 0)
+        checkIns.insert(CheckIn(habitID: self.id, text: text, triggerText: self.trigger, habitType: habitType), at: 0)
         checkIns[0].validateID()
         return self
     }
@@ -272,15 +273,6 @@ class Habit: MainItem, Codable, Comparable, IDValidator {
         return self
     }
     
-//    func withNoteChanged(replaceWith note: Note) -> Habit {
-//        notes = notes.map { $0.id == note.id ? note : $0 }
-//        return self
-//    }
-//
-//    func withCheckInTextChanged(replaceWith text: String, checkInWith id: UInt32) -> Habit {
-//        checkIns = checkIns.map {$0.id == id ? $0.withTextChanged(text: text) : $0 }
-//        return self
-//    }
     // MARK: - Buffering
     
     var bufferHabit: BufferHabit?
@@ -346,5 +338,42 @@ class Habit: MainItem, Codable, Comparable, IDValidator {
     
     static func == (lhs: Habit, rhs: Habit) -> Bool {
         lhs.creationDate == rhs.creationDate
+    }
+    
+    // MARK: - iCloud
+    
+    func preparedForCloud(record: CKRecord?) -> CKRecord {
+        var recordToSave: CKRecord
+        if let record = record {
+            recordToSave = record
+        }
+        else {
+            recordToSave = CKRecord(recordType: "Habit")
+        }
+        recordToSave[.trigger] = trigger
+        recordToSave[.badHabit] = badHabit
+        recordToSave[.goodHabit] = goodHabit
+        recordToSave[.date] = creationDate
+        recordToSave[.id] = id
+        recordToSave[.color] = color
+        recordToSave[.goalID] = goalID
+        recordToSave[.goalTitle] = goalTitle
+        
+        return recordToSave
+    }
+}
+
+enum HabitKey: String {
+    case trigger, badHabit, goodHabit, goalID, goalTitle
+}
+
+extension CKRecord {
+    subscript(key: HabitKey) -> Any? {
+        get {
+            return self[key.rawValue]
+        }
+        set {
+            self[key.rawValue] = newValue as? CKRecordValue
+        }
     }
 }

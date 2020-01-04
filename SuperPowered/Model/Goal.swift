@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CloudKit
 
 class Goal: MainItem, Codable, Comparable, IDValidator {
-// MARK: - Properties
+    // MARK: - Properties
     
     var itemType: MainItemType {
         return .goal(self)
@@ -63,8 +64,8 @@ class Goal: MainItem, Codable, Comparable, IDValidator {
         self.description = description
         self.color = color
     }
-
-// MARK: - Filtering and sorting
+    
+    // MARK: - Filtering and sorting
     
     var mainInterfaceArray: [MainItem] {
         let showActive: Bool = defaults.bool(forKey: showActiveItemsKey)
@@ -281,11 +282,11 @@ class Goal: MainItem, Codable, Comparable, IDValidator {
     func progressAtHour(date: Date, hour: Int) -> Int {
         return habits.map{$0.progressAtHour(date: date, hour: hour)}.reduce(0){$0 + $1}
     }
-
+    
     func goodCheckInsOn(date: Date) -> Int {
         return habits.map{$0.goodCheckInsOn(date: date)}.reduce(0){$0 + $1}
     }
-
+    
     func goodCheckInsAtHour(date: Date, hour: Int) -> Int {
         return habits.map{$0.goodCheckInsAtHour(date: date, hour: hour)}.reduce(0){$0 + $1}
     }
@@ -298,7 +299,7 @@ class Goal: MainItem, Codable, Comparable, IDValidator {
         return habits.map{$0.badCheckInsAtHour(date: date, hour: hour)}.reduce(0){$0 + $1}
     }
     
-// MARK: - Saving and validation
+    // MARK: - Saving and validation
     
     func areStringsValid() -> Bool {
         return self.title != "" && self.title != Goal.titlePlaceholder && self.description != "" && self.description != Goal.descriptionPlaceholder
@@ -329,6 +330,43 @@ class Goal: MainItem, Codable, Comparable, IDValidator {
         guard let retrievedGoalsData = try? Data(contentsOf: ArchiveURL) else { return nil }
         return try? propertyListDecoder.decode(Array<Goal>.self, from: retrievedGoalsData)
     }
+    
+    // MARK: - iCloud
+    
+    func preparedForCloud(record: CKRecord?) -> CKRecord {
+        var recordToSave: CKRecord
+        if let record = record {
+            recordToSave = record
+        }
+        else {
+            recordToSave = CKRecord(recordType: "Goal")
+        }
+        recordToSave[.title] = title
+        recordToSave[.description] = description
+        recordToSave[.date] = creationDate
+        recordToSave[.id] = id
+        recordToSave[.color] = color
+        recordToSave[.isCollapsed] = isCollapsed.int
+        recordToSave[.isFinishedConfirmationShown] = isFinishedConfirmationShown.int
+        recordToSave[.showNote] = showNote.int
+        recordToSave[.showBad] = showBadHabits.int
+        recordToSave[.showGood] = showGoodHabits.int
+        return recordToSave
+    }
+    
+    
+    //    static func saveToCloud(goals: [Goal]) {
+    //        let goalRecords = goals.map{$0.preparedForCloud()}
+    //        let records = goalRecords
+    //        for record in records {
+    //            database.save(record) { (record, error) in
+    //                if error != nil {
+    //                print(error)
+    //                }
+    //            }
+    //        }
+    //    }
+    
     // MARK: - Comparable
     
     static func < (lhs: Goal, rhs: Goal) -> Bool {
@@ -337,5 +375,20 @@ class Goal: MainItem, Codable, Comparable, IDValidator {
     
     static func == (lhs: Goal, rhs: Goal) -> Bool {
         lhs.creationDate == rhs.creationDate
+    }
+}
+
+enum GoalKey: String {
+    case title, description, date, id, color, isCollapsed, isFinishedConfirmationShown, showNote, showBad, showGood
+}
+
+extension CKRecord {
+    subscript(key: GoalKey) -> Any? {
+        get {
+            return self[key.rawValue]
+        }
+        set {
+            self[key.rawValue] = newValue as? CKRecordValue
+        }
     }
 }

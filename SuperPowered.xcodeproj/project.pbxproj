@@ -63,6 +63,9 @@
 		DA9D3F3223AE968B00BF6959 /* HabitJournalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9D3F3123AE968A00BF6959 /* HabitJournalViewController.swift */; };
 		DA9D3F3423B646B100BF6959 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA9D3F3323B646B100BF6959 /* Montserrat-Medium.ttf */; };
 		DA9D3F3623B646BA00BF6959 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA9D3F3523B646BA00BF6959 /* Montserrat-SemiBold.ttf */; };
+		DA9D3F3D23B7BB3000BF6959 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9D3F3C23B7BB3000BF6959 /* CloudKit.framework */; };
+		DA9D3F3F23BA2BEA00BF6959 /* extension Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9D3F3E23BA2BEA00BF6959 /* extension Bool.swift */; };
+		DA9D3F4123BB84DE00BF6959 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9D3F4023BB84DC00BF6959 /* DataManager.swift */; };
 		DAB90EBA236DBE0B004C774C /* CellActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB90EB9236DBE0B004C774C /* CellActionsView.swift */; };
 		DAB90EBC236DBEE9004C774C /* CellActionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAB90EBB236DBEE9004C774C /* CellActionsView.xib */; };
 		DAB90EBE2370ABC9004C774C /* extension UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB90EBD2370ABC9004C774C /* extension UIButton.swift */; };
@@ -177,6 +180,10 @@
 		DA9D3F3123AE968A00BF6959 /* HabitJournalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitJournalViewController.swift; sourceTree = "<group>"; };
 		DA9D3F3323B646B100BF6959 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		DA9D3F3523B646BA00BF6959 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		DA9D3F3A23B7BB0B00BF6959 /* SuperPowered.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SuperPowered.entitlements; sourceTree = "<group>"; };
+		DA9D3F3C23B7BB3000BF6959 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		DA9D3F3E23BA2BEA00BF6959 /* extension Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "extension Bool.swift"; sourceTree = "<group>"; };
+		DA9D3F4023BB84DC00BF6959 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		DAB90EB9236DBE0B004C774C /* CellActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellActionsView.swift; sourceTree = "<group>"; };
 		DAB90EBB236DBEE9004C774C /* CellActionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CellActionsView.xib; sourceTree = "<group>"; };
 		DAB90EBD2370ABC9004C774C /* extension UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "extension UIButton.swift"; sourceTree = "<group>"; };
@@ -245,6 +252,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA9D3F3D23B7BB3000BF6959 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +355,14 @@
 			path = "Goals Selector";
 			sourceTree = "<group>";
 		};
+		DA9D3F3B23B7BB3000BF6959 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA9D3F3C23B7BB3000BF6959 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DAB90ED523806729004C774C /* GoalScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,6 +429,7 @@
 				DACC8ECC2344C9370084870A /* Assets.xcassets */,
 				DACC8EFD234601320084870A /* TrigoTests */,
 				DACC8EC32344C9340084870A /* Products */,
+				DA9D3F3B23B7BB3000BF6959 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -427,6 +444,7 @@
 		DACC8EC42344C9340084870A /* SuperPowered */ = {
 			isa = PBXGroup;
 			children = (
+				DA9D3F3A23B7BB0B00BF6959 /* SuperPowered.entitlements */,
 				DACC8EC92344C9350084870A /* Main.storyboard */,
 				DA1232CA235DF4110051B0AA /* SettingsTableViewController.swift */,
 				DA2B7B042355F469005D8E76 /* TESTViewController.swift */,
@@ -459,6 +477,7 @@
 		DACC8EE12345141D0084870A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DA9D3F4023BB84DC00BF6959 /* DataManager.swift */,
 				DACC8EE5234518D60084870A /* MainItemType enum.swift */,
 				DA01F94B239FCCA90088B9F3 /* IDValidator.swift */,
 				DAB90EE723817628004C774C /* StatisticsItem.swift */,
@@ -484,6 +503,7 @@
 				DACC8F252348A4490084870A /* extension UIView.swift */,
 				DACC8F272348E47D0084870A /* extension UITableView.swift */,
 				DAB90EF223844607004C774C /* extension Calendar.swift */,
+				DA9D3F3E23BA2BEA00BF6959 /* extension Bool.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -685,6 +705,7 @@
 				DACC8F242348A0360084870A /* AchievementView.swift in Sources */,
 				DACC8EDC2345006C0084870A /* Habit.swift in Sources */,
 				DA1232CD235F3E900051B0AA /* QuickCheckInView.swift in Sources */,
+				DA9D3F4123BB84DE00BF6959 /* DataManager.swift in Sources */,
 				DA5BA268234BB69B00A445B3 /* BadHabitRectView.swift in Sources */,
 				DAB90ECC237DC4F1004C774C /* GoalsTableViewContainer.swift in Sources */,
 				DA5BA26C234C90DF00A445B3 /* HabitScene.swift in Sources */,
@@ -714,6 +735,7 @@
 				DA2B7AFC2355DF45005D8E76 /* GoalTableViewCell.swift in Sources */,
 				DAB90EBE2370ABC9004C774C /* extension UIButton.swift in Sources */,
 				DAB90EE223817167004C774C /* StatisticsCollectionViewCell.swift in Sources */,
+				DA9D3F3F23BA2BEA00BF6959 /* extension Bool.swift in Sources */,
 				DA01F9282393A5880088B9F3 /* DiscreteProgressBar.swift in Sources */,
 				DA5BA2822350A8E200A445B3 /* FeedTableViewCell.swift in Sources */,
 				DA01F92C2393ECF80088B9F3 /* BatteryView.swift in Sources */,
@@ -875,6 +897,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SuperPowered/SuperPowered.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9B6XMQ42ZT;
 				INFOPLIST_FILE = "$(SRCROOT)/SuperPowered/Info.plist";
@@ -894,6 +917,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SuperPowered/SuperPowered.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9B6XMQ42ZT;
 				INFOPLIST_FILE = "$(SRCROOT)/SuperPowered/Info.plist";

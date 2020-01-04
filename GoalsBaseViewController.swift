@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CloudKit
 
 class GoalsBaseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var dataManager = DataManager()
     
     var goals: [Goal] = [] {
         didSet {
@@ -85,8 +88,12 @@ class GoalsBaseViewController: UIViewController, UITableViewDataSource, UITableV
         }
         return indexPath
     }
+    
+    // MARK: - ViewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = UIColor.backgroundColor
         setupEmptyScreenView()
         setupTableView()
@@ -102,8 +109,28 @@ class GoalsBaseViewController: UIViewController, UITableViewDataSource, UITableV
         }
         goals = goalsSorted()
         tableView.reloadData()
+        
         registerForKeyboardNotifications()
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        refreshControl.tintColor = UIColor.textColor
+        tableView.refreshControl = refreshControl
     }
+    
+    @objc func refresh() {
+        fetchAndReload()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    func fetchAndReload() {
+        self.dataManager.fetchAll { goals in
+            self.goals = goals
+            self.goals = self.goalsSorted()
+            self.tableView.reloadData()
+        }
+    }
+    
     func setupTableView() {
         view.addSubview(tableView)
         tableView.constrainToEdges(of: view, leading: 0, trailing: 0, top: nil, bottom: nil)
@@ -140,7 +167,7 @@ class GoalsBaseViewController: UIViewController, UITableViewDataSource, UITableV
         emptyScreenLabel.font = UIFont(name: montserratSemiBold, size: 16)
         emptyScreenLabel.textAlignment = .center
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -266,6 +293,7 @@ class GoalsBaseViewController: UIViewController, UITableViewDataSource, UITableV
                 self.goals = self.goals.filter { $0.id != goal.id }
                 Goal.saveToFile(goals: self.goals)
                 tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+                self.dataManager.delete(goal: goal)
             })
             let no = UIAlertAction(title: "No", style: .default, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
@@ -306,13 +334,13 @@ class GoalsBaseViewController: UIViewController, UITableViewDataSource, UITableV
                     section: indexPath.section)
             }
             else {
-            var goal = interfaceSource[indexPath.section][0] as! Goal
-            goal = goal.withHabitAdded(habit: nil)
-            var newHabit = goal.habits[goal.newHabitIndex! - 1]
-            newHabit.validateID()
-            newIndexPath = IndexPath(
-                row: goal.newHabitIndex!,
-                section: indexPath.section)
+                var goal = interfaceSource[indexPath.section][0] as! Goal
+                goal = goal.withHabitAdded(habit: nil)
+                var newHabit = goal.habits[goal.newHabitIndex! - 1]
+                newHabit.validateID()
+                newIndexPath = IndexPath(
+                    row: goal.newHabitIndex!,
+                    section: indexPath.section)
             }
             tableView.insertRows(at: [newIndexPath], with: .middle)
             tableView.scrollToRow(at: newIndexPath, at: .middle, animated: true)
@@ -376,12 +404,12 @@ extension GoalsBaseViewController: ColorPickerDelegate {
     func colorPicked(at index: Int) {
         // if used for main controller
         if goal == nil {
-        for (offset, goal) in goals.enumerated() {
-            if goal.bufferGoal != nil {
-                goal.color = index
-                self.tableView.reloadSections(IndexSet(integer: offset), with: .automatic)
+            for (offset, goal) in goals.enumerated() {
+                if goal.bufferGoal != nil {
+                    goal.color = index
+                    self.tableView.reloadSections(IndexSet(integer: offset), with: .automatic)
+                }
             }
-        }
         }
             // if used for goal controller
         else {
@@ -427,37 +455,33 @@ extension GoalsBaseViewController: CellSaveDiscardDelegate {
             if let goal = goal(at: indexPath) {
                 goal.saveChanges()
                 tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+                dataManager.save(goal: goal)
+                for habit in goal.habits {
+                    dataManager.save(habit: habit)
+                }
             }
             if let habit = habit(at: indexPath) {
-                if var goal = goal {
-                    if habit.goalID != goal.id {
-                        habit.isEditMode = false
-                        goal = goal.withHabitRemoved(habit: habit)
-//                        goals = goals.map{$0.id != goal.id ? $0 : goal}
-                        var destinationGoal = goals.filter{$0.id == habit.goalID}.first!
-                        destinationGoal = destinationGoal.withHabitAdded(habit: habit)
-                        tableView.reloadData()
-                    }
-                    else {
-                        habit.isEditMode = false
-//                        goals = goals.map{$0.id != goal.id ? $0 : goal}
-                        tableView.reloadRows(at: [indexPath], with: .automatic)
-                    }
+                // if goalScreen
+                var goalToModify: Goal
+                if let goal = goal {
+                    goalToModify = goal
+                }
+                    // if mainScreen
+                else {
+                    goalToModify = goal(at: IndexPath(row: 0, section: indexPath.section))!
+                }
+                if habit.goalID != goalToModify.id {
+                    habit.isEditMode = false
+                    goalToModify = goalToModify.withHabitRemoved(habit: habit)
+                    var destinationGoal = goals.filter{$0.id == habit.goalID}.first!
+                    destinationGoal = destinationGoal.withHabitAdded(habit: habit)
+                    tableView.reloadData()
                 }
                 else {
-                    var sourceGoal = goal(at: IndexPath(row: 0, section: indexPath.section))!
-                    if habit.goalID != sourceGoal.id {
-                        habit.isEditMode = false
-                        sourceGoal = sourceGoal.withHabitRemoved(habit: habit)
-                        var destinationGoal = goals.filter{$0.id == habit.goalID}.first!
-                        destinationGoal = destinationGoal.withHabitAdded(habit: habit)
-                        tableView.reloadData()
-                    }
-                    else {
-                        habit.isEditMode = false
-                        tableView.reloadRows(at: [indexPath], with: .automatic)
-                    }
+                    habit.isEditMode = false
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
+                dataManager.save(habit: habit)
             }
         }
         for goal in goals {
@@ -490,8 +514,8 @@ extension GoalsBaseViewController: CellSaveDiscardDelegate {
                         goal.habits = goal.habits.filter{$0.id != habit.id}
                     }
                     else {
-                    let sourceGoal = goal(at: IndexPath(row: 0, section: indexPath.section))!
-                    sourceGoal.habits = sourceGoal.habits.filter{$0.id != habit.id}
+                        let sourceGoal = goal(at: IndexPath(row: 0, section: indexPath.section))!
+                        sourceGoal.habits = sourceGoal.habits.filter{$0.id != habit.id}
                     }
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
@@ -513,6 +537,8 @@ extension GoalsBaseViewController: QuickCheckInReceiver {
         if var habit = habit(at: indexPath) {
             habit = habit.withCheckInAdded(habitType: .bad)
             Goal.saveToFile(goals: goals)
+            let checkIn = habit.checkIns[0]
+            dataManager.save(checkIn: checkIn)
             if let alert = habit.alertFailed() {
                 self.present(alert, animated: true)
             }
@@ -524,6 +550,8 @@ extension GoalsBaseViewController: QuickCheckInReceiver {
         if var habit = habit(at: indexPath) {
             habit = habit.withCheckInAdded(habitType: .good)
             Goal.saveToFile(goals: goals)
+            let checkIn = habit.checkIns[0]
+            dataManager.save(checkIn: checkIn)
             if let alert = habit.alertFinished(handler: nil) {
                 self.present(alert, animated: true) {
                     self.dismiss(animated: true) {
@@ -538,6 +566,8 @@ extension GoalsBaseViewController: QuickCheckInReceiver {
     func cancelLastCheckIn(cell: UITableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         if var habit = habit(at: indexPath) {
+            let checkIn = habit.checkIns[0]
+            dataManager.delete(checkIn: checkIn)
             habit = habit.withLastCheckInCancelled()
             Goal.saveToFile(goals: goals)
         }
@@ -557,7 +587,7 @@ extension GoalsBaseViewController: CellActionsDelegate {
     func addNote(sender: UIButton) {
         if let indexPath = getCurrentCellIndexPath(view: sender, in: tableView) {
             selectedIndexPath = indexPath
-//            let feedController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedTableVC") as! FeedTableViewController
+            //            let feedController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedTableVC") as! FeedTableViewController
             let feedController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "journalVC") as! HabitJournalViewController
             if let habit = habit(at: indexPath) {
                 feedController.historyTableViewContainer.feedItems = habit.journalInterfaceArray
@@ -611,6 +641,7 @@ extension GoalsBaseViewController: CellActionsDelegate {
                     let goal = self.goals.filter{$0.hasItemWithID(id: habit.id)}.first!
                     goal.habits = goal.habits.filter{$0.id != habit.id}
                     Goal.saveToFile(goals: self.goals)
+                    self.dataManager.delete(habit: habit)
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 }
             }
@@ -690,6 +721,7 @@ extension GoalsBaseViewController: FeedDelegate {
     func addNote(note: Note) {
         guard let selectedIndexPath = selectedIndexPath,
             let habit = habit(at: selectedIndexPath) else { return }
+        note.id = habit.id
         note.triggerText = habit.trigger
         habit.notes.insert(note, at: 0)
         habit.notes[0].validateID()
